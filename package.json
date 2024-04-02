@@ -1,0 +1,50 @@
+{
+  "name": "mine-tools",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "tauri": "tauri",
+    "prettier": "prettier --with-node-modules --config .prettierrc.cjs --write ./src/**/*.{ts,js,tsx,vue,less}",
+    "lint:es": "eslint ./src --fix --ext .js,.ts,.tsx",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^1",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0",
+    "@tauri-apps/cli": "^1",
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/parser": "^7.5.0",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "commitizen": "^4.3.0",
+    "conventional-changelog-cli": "^4.1.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.24.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "typescript": "^5.0.2",
+    "vite": "^5.2.7",
+    "vue-tsc": "^1.8.27"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue,jsx,tsx,less}": [
+      "yarn prettier",
+      "yarn lint:es"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
