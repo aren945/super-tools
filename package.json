@@ -38,7 +38,9 @@
   },
   "lint-staged": {
     "*.{js,ts,vue,jsx,tsx,less}": [
-      "yarn prettier",
+      "yarn prettier"
+    ],
+    "*.{js,ts,vue,jsx,tsx}": [
       "yarn lint:es"
     ]
   },

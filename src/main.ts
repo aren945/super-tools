@@ -1,5 +1,8 @@
 import { createApp } from "vue";
-import "./styles.css";
-import App from "./App.vue";
+import App from "./App";
+import router from "./router/index";
+import "./style/reset.less";
 
-createApp(App).mount("#app");
+const app = createApp(App);
+
+app.use(router).mount("#app");
