@@ -15,21 +15,27 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1",
-    "vue": "^3.4.21"
+    "pinia": "^2.1.7",
+    "uuid": "^9.0.1",
+    "vue": "^3.4.21",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@tauri-apps/cli": "^1",
+    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
     "commitizen": "^4.3.0",
     "conventional-changelog-cli": "^4.1.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.24.0",
     "husky": "^9.0.11",
+    "less": "^4.2.0",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "typescript": "^5.0.2",
