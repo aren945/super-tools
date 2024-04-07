@@ -22,7 +22,7 @@
         "close": false,
         "create": false,
         "hide": false,
-        "maximize": false,
+        "maximize": true,
         "minimize": false,
         "print": false,
         "requestUserAttention": false,
@@ -56,7 +56,7 @@
     "windows": [
       {
         "label": "main",
-        "fullscreen": true,
+        "fullscreen": false,
         "title": "",
         "width": 800,
         "height": 600,

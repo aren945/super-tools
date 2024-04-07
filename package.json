@@ -42,14 +42,6 @@
     "vite": "^5.2.7",
     "vue-tsc": "^1.8.27"
   },
-  "lint-staged": {
-    "*.{js,ts,vue,jsx,tsx,less}": [
-      "yarn prettier"
-    ],
-    "*.{js,ts,vue,jsx,tsx}": [
-      "yarn lint:es"
-    ]
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
