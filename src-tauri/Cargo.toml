@@ -15,6 +15,7 @@ tauri = { version = "1", features = [ "window-all", "shell-open"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 rdev = { version="0.5.3", features= ["unstable_grab"] }
+winit = "0.29.15"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!

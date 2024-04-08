@@ -5,11 +5,7 @@ export default defineComponent({
   name: "App",
   setup() {
     return () => {
-      return (
-        <div>
-          <RouterView />
-        </div>
-      );
+      return <RouterView />;
     };
   },
 });
