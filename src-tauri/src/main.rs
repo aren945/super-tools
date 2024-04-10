@@ -1,22 +1,37 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod events;
-use events::mouse::{patch_mouse_move_event, patch_mousue_click_event};
-use rdev::EventType;
-use tauri::{Manager, PhysicalSize, Size};
+mod modules;
+use modules::tray::menu;
+use tauri::{Manager, PhysicalSize, Size, SystemTray, SystemTrayMenu};
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
-// 声明一个全局变量，用于存储鼠标的位置
-static mut MOUSE_POSITION: (f64, f64) = (0.0, 0.0);
 fn main() {
     tauri::Builder::default()
+        .system_tray(menu())
+        // 监听窗口事件
+        .on_window_event(|event| {
+            match event.event() {
+                tauri::WindowEvent::Focused(isFocused) => {
+                    // 如果未fouce
+                    // TODO: 如果当前点击窗口外部，隐藏窗口
+                    if !*isFocused {
+                        // event.window().close();
+                        // event.window().hide();
+                    }
+                }
+                _ => (),
+            }
+            println!("event is: {:?}", event.event())
+        })
         .setup(move |app| {
             let window = app.get_window("main").unwrap();
             window.set_size(Size::Physical(PhysicalSize { width: 600, height: 50 })).unwrap();
             window.center().unwrap();
+            window.open_devtools();
             // 窗口最大化
             // window.maximize().unwrap();
             // 设置窗口为点击穿透
