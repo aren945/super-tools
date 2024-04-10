@@ -2,13 +2,17 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod events;
 mod modules;
+mod utils;
+use dotenv::dotenv;
 use modules::{
     tray::{handler, menu},
     window::window_event_handler,
 };
 use state::InitCell;
 use std::{env, fs::File, io::Read, path};
-use tauri::{LogicalSize, Manager, Size};
+use tauri::{ActivationPolicy, LogicalSize, Manager, Size};
+
+use crate::utils::util::get_is_dev;
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -34,6 +38,8 @@ fn read_event_json() -> serde_json::Value {
 }
 
 fn main() {
+    // 设置环境变量
+    dotenv().ok();
     // 读取事件常量
     read_event_json();
     println!("state is: {:?}", CONSTTANT.get());
@@ -43,9 +49,16 @@ fn main() {
         // 监听窗口事件
         .on_window_event(window_event_handler)
         .setup(move |app| {
+            // 不创建dock应用图标
+            app.set_activation_policy(ActivationPolicy::Accessory);
             let window = app.get_window("main").unwrap();
             // 使用逻辑大小来设置宽高度，不然会根据屏幕分辨率的不同呈现出不同的大小
             window.set_size(Size::Logical(LogicalSize { width: 600.0, height: 50.0 })).unwrap();
+            // 如果不是开发环境，不将窗口强制置顶
+            if !get_is_dev() {
+                println!("23");
+                window.set_always_on_top(true).unwrap();
+            }
             window.center().unwrap();
             window.open_devtools();
             // 窗口最大化

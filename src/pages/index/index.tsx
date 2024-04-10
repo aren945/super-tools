@@ -15,6 +15,7 @@ export default defineComponent({
       // window窗口隐藏后，清空搜索框的值
       listen(getWinodwHiddenEvent(), () => {
         searchVaule.value = "";
+        tools.value = [];
       });
     });
 

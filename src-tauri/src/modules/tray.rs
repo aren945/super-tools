@@ -22,9 +22,9 @@ pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
             match id.as_str() {
                 "Open" => {
                     // 打开主页面
-                    // TODO
                     println!("Open");
                     window.show().unwrap();
+                    window.set_focus().unwrap();
                 }
                 "Exit" => {
                     // 退出

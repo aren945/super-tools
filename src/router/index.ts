@@ -1,3 +1,5 @@
+import { window } from "@tauri-apps/api";
+import { register } from "@tauri-apps/api/globalShortcut";
 import { RouteRecordRaw, createRouter, createWebHistory } from "vue-router";
 
 const routerModules = import.meta.glob<{
@@ -16,6 +18,20 @@ Object.keys(routerModules).forEach((key) => {
 const router = createRouter({
   history: createWebHistory(),
   routes: routeModuleList,
+});
+
+// 注册快捷键
+const registerHotKey = async () => {
+  await register("CommandOrControl+Shift+O", (shortcut) => {
+    console.log("shortcut is:", shortcut);
+    window.appWindow.show();
+    window.appWindow.setFocus();
+  });
+};
+
+router.beforeEach((to, from, next) => {
+  registerHotKey();
+  next();
 });
 
 export default router;

@@ -1,7 +1,5 @@
-use tauri::GlobalWindowEvent;
-
 use crate::events::global::patch_window_hide;
-
+use tauri::GlobalWindowEvent;
 pub fn window_event_handler(event: GlobalWindowEvent) {
     match event.event() {
         tauri::WindowEvent::Focused(is_focused) => {
