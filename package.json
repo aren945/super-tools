@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "tauri": "tauri",
-    "prettier": "prettier --with-node-modules --config .prettierrc.cjs --write ./src/**/*.{ts,js,tsx,vue,less}",
+    "prettier": "prettier --with-node-modules --config .prettierrc.cjs --write ./src",
     "lint:es": "eslint ./src --fix --ext .js,.ts,.tsx",
     "prepare": "husky"
   },
