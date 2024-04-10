@@ -1,4 +1,4 @@
-import { PhysicalSize, appWindow } from "@tauri-apps/api/window";
+import { LogicalSize, appWindow } from "@tauri-apps/api/window";
 import { App, nextTick } from "vue";
 
 export const registerDirectives = (app: App) => {
@@ -7,7 +7,7 @@ export const registerDirectives = (app: App) => {
       const width = (el as HTMLDivElement).clientWidth;
       const height = (el as HTMLDivElement).clientHeight;
       nextTick(async () => {
-        await appWindow.setSize(new PhysicalSize(width, height));
+        await appWindow.setSize(new LogicalSize(width, height));
       });
     },
   });

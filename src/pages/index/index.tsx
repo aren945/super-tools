@@ -1,13 +1,22 @@
 import PageContainer from "@/components/PageContainer";
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import s from "./index.module.less";
 import { Input } from "ant-design-vue";
+import { listen } from "@tauri-apps/api/event";
+import { getWinodwHiddenEvent } from "@/utils/events";
 
 export default defineComponent({
   name: "IndexPage",
   setup() {
     const searchVaule = ref();
     const tools = ref<string[]>([]);
+
+    onMounted(() => {
+      // window窗口隐藏后，清空搜索框的值
+      listen(getWinodwHiddenEvent(), () => {
+        searchVaule.value = "";
+      });
+    });
 
     const handleEnter = () => {
       if (!searchVaule.value) {

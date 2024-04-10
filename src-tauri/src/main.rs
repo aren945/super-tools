@@ -2,34 +2,50 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod events;
 mod modules;
-use modules::tray::menu;
-use tauri::{Manager, PhysicalSize, Size, SystemTray, SystemTrayMenu};
+use modules::{
+    tray::{handler, menu},
+    window::window_event_handler,
+};
+use state::InitCell;
+use std::{env, fs::File, io::Read, path};
+use tauri::{LogicalSize, Manager, Size};
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
+
+static CONSTTANT: InitCell<serde_json::Value> = InitCell::new();
+
+// 获取事件常量
+fn read_event_json() -> serde_json::Value {
+    // 获取当前的工作目录
+    let current_dir = env::current_dir().unwrap();
+    // 读取事件常量
+    let constant_path = current_dir.join("../constants/events.json");
+    let mut file = File::open(path::Path::new(&constant_path)).unwrap();
+    let mut contenet = String::new();
+    // 将读取的内容写入到contenet中
+    let _ = file.read_to_string(&mut contenet);
+    // 序列化成json
+    let json: serde_json::Value = serde_json::from_str(&contenet).unwrap();
+    CONSTTANT.set(json.clone());
+    json
+}
+
 fn main() {
+    // 读取事件常量
+    read_event_json();
+    println!("state is: {:?}", CONSTTANT.get());
     tauri::Builder::default()
         .system_tray(menu())
+        .on_system_tray_event(handler)
         // 监听窗口事件
-        .on_window_event(|event| {
-            match event.event() {
-                tauri::WindowEvent::Focused(isFocused) => {
-                    // 如果未fouce
-                    // TODO: 如果当前点击窗口外部，隐藏窗口
-                    if !*isFocused {
-                        // event.window().close();
-                        // event.window().hide();
-                    }
-                }
-                _ => (),
-            }
-            println!("event is: {:?}", event.event())
-        })
+        .on_window_event(window_event_handler)
         .setup(move |app| {
             let window = app.get_window("main").unwrap();
-            window.set_size(Size::Physical(PhysicalSize { width: 600, height: 50 })).unwrap();
+            // 使用逻辑大小来设置宽高度，不然会根据屏幕分辨率的不同呈现出不同的大小
+            window.set_size(Size::Logical(LogicalSize { width: 600.0, height: 50.0 })).unwrap();
             window.center().unwrap();
             window.open_devtools();
             // 窗口最大化
